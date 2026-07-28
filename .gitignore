@@ -35,6 +35,9 @@ supabase/.branches/
 *.sln
 *.sw?
 
+# Vercel
+.vercel
+
 #credential
 .env
 .test_credentials.json
