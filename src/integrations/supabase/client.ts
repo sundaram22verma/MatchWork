@@ -36,13 +36,13 @@ function createSupabaseClient() {
     (typeof process !== "undefined"
       ? process.env?.VITE_SUPABASE_URL || process.env?.SUPABASE_URL
       : undefined) ||
-    "";
+    "https://placeholder-project.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY =
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
     (typeof process !== "undefined"
       ? process.env?.VITE_SUPABASE_PUBLISHABLE_KEY || process.env?.SUPABASE_PUBLISHABLE_KEY
       : undefined) ||
-    "";
+    "placeholder-key";
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     global: {

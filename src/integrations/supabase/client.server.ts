@@ -36,13 +36,13 @@ function createSupabaseAdminClient() {
   const SUPABASE_URL =
     (typeof process !== "undefined"
       ? process.env?.SUPABASE_URL || process.env?.VITE_SUPABASE_URL
-      : undefined) || "";
+      : undefined) || "https://placeholder-project.supabase.co";
   const SUPABASE_SERVICE_ROLE_KEY =
     (typeof process !== "undefined"
       ? process.env?.SUPABASE_SERVICE_ROLE_KEY ||
         process.env?.SUPABASE_PUBLISHABLE_KEY ||
         process.env?.VITE_SUPABASE_PUBLISHABLE_KEY
-      : undefined) || "";
+      : undefined) || "placeholder-key";
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     global: {
