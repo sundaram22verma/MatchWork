@@ -37,3 +37,4 @@ supabase/.branches/
 
 #credential
 .env
+.test_credentials.json
