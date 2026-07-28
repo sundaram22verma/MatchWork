@@ -34,11 +34,15 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 
 function createSupabaseAdminClient() {
   const SUPABASE_URL =
-    (typeof process !== "undefined" ? process.env?.SUPABASE_URL || process.env?.VITE_SUPABASE_URL : undefined) ||
-    "https://kxoinkhttfzxkygdbxtn.supabase.co";
+    (typeof process !== "undefined"
+      ? process.env?.SUPABASE_URL || process.env?.VITE_SUPABASE_URL
+      : undefined) || "";
   const SUPABASE_SERVICE_ROLE_KEY =
-    (typeof process !== "undefined" ? process.env?.SUPABASE_SERVICE_ROLE_KEY || process.env?.SUPABASE_PUBLISHABLE_KEY || process.env?.VITE_SUPABASE_PUBLISHABLE_KEY : undefined) ||
-    "sb_publishable_7P6xS6CS_salDsmFjIBY0g_2CkUSMkK";
+    (typeof process !== "undefined"
+      ? process.env?.SUPABASE_SERVICE_ROLE_KEY ||
+        process.env?.SUPABASE_PUBLISHABLE_KEY ||
+        process.env?.VITE_SUPABASE_PUBLISHABLE_KEY
+      : undefined) || "";
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
     global: {
