@@ -617,22 +617,22 @@ The application is designed for serverless or Node.js SSR deployment platforms (
 
 ```mermaid
 graph TD
-    Client[React 19 Client SPA]
-    Router[TanStack Router]
-    ServerFn[TanStack Start Server Functions]
-    AuthMiddleware[Supabase Auth Middleware]
-    AIEmbed[AI Embedding Server Module]
-    HFAPI[Hugging Face Inference API]
-    LocalXenova[@xenova/transformers Local Fallback]
-    SupabaseDB[(Supabase PostgreSQL + pgvector)]
+    Client["React 19 Client SPA"]
+    Router["TanStack Router"]
+    ServerFn["TanStack Start Server Functions"]
+    AuthMiddleware["Supabase Auth Middleware"]
+    AIEmbed["AI Embedding Server Module"]
+    HFAPI["Hugging Face Inference API"]
+    LocalXenova["@xenova/transformers Local Fallback"]
+    SupabaseDB[("(Supabase PostgreSQL + pgvector)")]
 
     Client --> Router
     Router --> ServerFn
     ServerFn --> AuthMiddleware
     AuthMiddleware --> SupabaseDB
     ServerFn --> AIEmbed
-    AIEmbed -- Primary (HF Token) --> HFAPI
-    AIEmbed -- Fallback (No Token) --> LocalXenova
+    AIEmbed -- "Primary (HF Token)" --> HFAPI
+    AIEmbed -- "Fallback (No Token)" --> LocalXenova
     ServerFn --> SupabaseDB
 ```
 
@@ -640,25 +640,25 @@ graph TD
 
 ```mermaid
 graph LR
-    Routes[src/routes] --> Components[src/components]
-    Routes --> LibFunctions[src/lib/matchwork.functions.ts]
-    LibFunctions --> AuthMiddleware[src/integrations/supabase/auth-middleware.ts]
-    LibFunctions --> AIEmbed[src/lib/ai-embed.server.ts]
-    LibFunctions --> SharedLib[src/lib/matchwork-shared.ts]
-    AuthMiddleware --> SupabaseClient[src/integrations/supabase/client.ts]
-    AIEmbed --> Xenova[@xenova/transformers]
+    Routes["src/routes"] --> Components["src/components"]
+    Routes --> LibFunctions["src/lib/matchwork.functions.ts"]
+    LibFunctions --> AuthMiddleware["src/integrations/supabase/auth-middleware.ts"]
+    LibFunctions --> AIEmbed["src/lib/ai-embed.server.ts"]
+    LibFunctions --> SharedLib["src/lib/matchwork-shared.ts"]
+    AuthMiddleware --> SupabaseClient["src/integrations/supabase/client.ts"]
+    AIEmbed --> Xenova["@xenova/transformers"]
 ```
 
 ### Component Hierarchy Diagram
 
 ```mermaid
 graph TD
-    RootRoute[__root.tsx Layout Shell]
-    AuthGuard[_authenticated/route.tsx Guard]
-    CandidateIndex[_authenticated/candidate/index.tsx]
-    EmployerIndex[_authenticated/employer/index.tsx]
-    PostingDetail[_authenticated/employer/postings.$id.tsx]
-    MatchBadgeComponent[MatchBadge & WhyMatch Components]
+    RootRoute["__root.tsx Layout Shell"]
+    AuthGuard["_authenticated/route.tsx Guard"]
+    CandidateIndex["_authenticated/candidate/index.tsx"]
+    EmployerIndex["_authenticated/employer/index.tsx"]
+    PostingDetail["_authenticated/employer/postings.$id.tsx"]
+    MatchBadgeComponent["MatchBadge & WhyMatch Components"]
 
     RootRoute --> AuthGuard
     AuthGuard --> CandidateIndex
@@ -673,12 +673,12 @@ graph TD
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as User Browser
-    participant App as React App
-    participant AuthAttacher as auth-attacher.ts
-    participant ServerFn as Server Function (matchwork.functions)
-    participant AuthMiddleware as auth-middleware.ts
-    participant Supabase as Supabase Cloud
+    actor User as "User Browser"
+    participant App as "React App"
+    participant AuthAttacher as "auth-attacher.ts"
+    participant ServerFn as "Server Function (matchwork.functions)"
+    participant AuthMiddleware as "auth-middleware.ts"
+    participant Supabase as "Supabase Cloud"
 
     User->>App: Request Action (e.g. View Matches)
     App->>AuthAttacher: Invoke Server Function
@@ -699,15 +699,15 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    A[Start: User Requests Job Matches] --> B{User Profile & Vector Embedded?}
-    B -- No --> C[Display Empty State: Build Profile Prompt]
-    B -- Yes --> D[Read Filters: Min Budget & Contract Length]
-    D --> E[Execute match_postings_for_candidate RPC]
-    E --> F[Filter Open Job Postings]
-    F --> G[Compute Cosine Similarity: 1 - jp.embedding <=> cp.embedding]
-    G --> H[Sort Matches Descending by Similarity]
-    H --> I[Client Extract Keyword Overlap via explainOverlap]
-    I --> J[Render Ranked Match Cards with Score Badges & Overlap Terms]
+    A["Start: User Requests Job Matches"] --> B{"User Profile & Vector Embedded?"}
+    B -- No --> C["Display Empty State: Build Profile Prompt"]
+    B -- Yes --> D["Read Filters: Min Budget & Contract Length"]
+    D --> E["Execute match_postings_for_candidate RPC"]
+    E --> F["Filter Open Job Postings"]
+    F --> G["Compute Cosine Similarity: 1 - jp.embedding <=> cp.embedding"]
+    G --> H["Sort Matches Descending by Similarity"]
+    H --> I["Client Extract Keyword Overlap via explainOverlap"]
+    I --> J["Render Ranked Match Cards with Score Badges & Overlap Terms"]
 ```
 
 ---
