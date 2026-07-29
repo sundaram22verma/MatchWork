@@ -577,6 +577,17 @@ The application is designed for serverless or Node.js SSR deployment platforms (
 2. **Server Function Bundling**: Server functions compile into isolated RPC endpoints, avoiding client bundle bloating.
 3. **Local Quantized Embeddings**: When running locally without HF API tokens, `@xenova/transformers` uses 8-bit quantized models (`quantized: true`) for lightweight RAM usage and fast CPU inference.
 4. **React Query Invalidation**: Smart cache invalidation (`queryClient.invalidateQueries`) ensures UI updates immediately after profile saves or application submissions without full page reloads.
+5. **Speed Insights Collection**: The app dynamically injects Vercel Speed Insights client-side metrics collection using `@vercel/speed-insights`.
+
+### Collecting Browser Performance Metrics
+
+1. Install the Speed Insights package:
+   ```bash
+   npm install @vercel/speed-insights
+   ```
+2. The app already loads `injectSpeedInsights()` from the root client shell when running in the browser.
+3. Deploy your changes and visit your site to collect your first data points.
+4. If you don't see data after 30 seconds, check for content blockers and navigate between pages to trigger metric collection.
 
 ---
 
