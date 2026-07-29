@@ -39,7 +39,10 @@ export const requireSupabaseAuth = createMiddleware({ type: "function" }).server
         : undefined) || "https://placeholder-project.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY =
       (typeof process !== "undefined"
-        ? process.env?.SUPABASE_PUBLISHABLE_KEY || process.env?.VITE_SUPABASE_PUBLISHABLE_KEY
+        ? process.env?.SUPABASE_PUBLISHABLE_KEY ||
+          process.env?.SUPABASE_ANON_KEY ||
+          process.env?.VITE_SUPABASE_PUBLISHABLE_KEY ||
+          process.env?.VITE_SUPABASE_ANON_KEY
         : undefined) || "placeholder-key";
 
     const request = getRequest();

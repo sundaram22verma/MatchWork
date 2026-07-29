@@ -39,8 +39,12 @@ function createSupabaseClient() {
     "https://placeholder-project.supabase.co";
   const SUPABASE_PUBLISHABLE_KEY =
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+    import.meta.env.VITE_SUPABASE_ANON_KEY ||
     (typeof process !== "undefined"
-      ? process.env?.VITE_SUPABASE_PUBLISHABLE_KEY || process.env?.SUPABASE_PUBLISHABLE_KEY
+      ? process.env?.VITE_SUPABASE_PUBLISHABLE_KEY ||
+        process.env?.VITE_SUPABASE_ANON_KEY ||
+        process.env?.SUPABASE_PUBLISHABLE_KEY ||
+        process.env?.SUPABASE_ANON_KEY
       : undefined) ||
     "placeholder-key";
 
