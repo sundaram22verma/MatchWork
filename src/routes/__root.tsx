@@ -128,6 +128,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+
   useEffect(() => {
     try {
       const { data } = supabase.auth.onAuthStateChange((event) => {
@@ -140,6 +141,25 @@ function RootComponent() {
       console.warn("Supabase auth listener disabled:", err);
     }
   }, [router, queryClient]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void import("@vercel/speed-insights")
+      .then((mod) => {
+        if (!cancelled && typeof mod.injectSpeedInsights === "function") {
+          mod.injectSpeedInsights();
+        }
+      })
+      .catch((error) => {
+        console.warn("Speed Insights injection failed:", error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />

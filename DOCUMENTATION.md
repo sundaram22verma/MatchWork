@@ -10,6 +10,7 @@ Welcome to the **MatchWork** technical documentation. This document covers the a
 2. [Tech Stack](#2-tech-stack)
 3. [CI/CD Pipeline (GitHub Actions)](#3-cicd-pipeline-github-actions)
 4. [Vercel Deployment Guide](#4-vercel-deployment-guide)
+   1. [Performance Metrics Collection](#41-performance-metrics-collection)
 5. [Local Development & Build Instructions](#5-local-development--build-instructions)
 6. [Environment Variables](#6-environment-variables)
 7. [Database Schema & Seed Data](#7-database-schema--seed-data)
@@ -79,6 +80,20 @@ Navigate to your GitHub repository -> **Settings** -> **Secrets and variables** 
 
 ### Step 4.3: Trigger Automatic Deployment
 Pushing code to `main` will automatically trigger the GitHub Action and deploy to Vercel!
+
+---
+
+## 4.1 Performance Metrics Collection
+
+To enable browser performance telemetry for the deployed site, install and initialize Vercel Speed Insights.
+
+1. Install the package:
+   ```bash
+   npm install @vercel/speed-insights
+   ```
+2. The repository's root client shell dynamically imports and calls `injectSpeedInsights()` in the browser.
+3. Deploy your changes and open the live site. Allow about 30 seconds for initial metrics to appear.
+4. If no data arrives, disable ad/content blockers and navigate through multiple pages.
 
 ---
 
