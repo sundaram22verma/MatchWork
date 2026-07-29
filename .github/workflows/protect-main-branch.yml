@@ -1,0 +1,35 @@
+name: Enforce Main Branch Protection
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  administration: write
+
+jobs:
+  enforce-protection:
+    name: Enforce main branch protection
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set main branch protection rules
+        run: |
+          api_url="https://api.github.com/repos/${GITHUB_REPOSITORY}/branches/main/protection"
+
+          curl -sSL -X PUT "$api_url" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "required_status_checks": {
+                "strict": true,
+                "contexts": ["Lint & Build Verification"]
+              },
+              "enforce_admins": true,
+              "restrictions": null,
+              "allow_deletions": false,
+              "allow_force_pushes": false
+            }'
