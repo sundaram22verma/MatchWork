@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import appCss from "../styles.css?url";
 import { reportRuntimeError } from "../lib/error-reporting";
@@ -142,28 +143,11 @@ function RootComponent() {
     }
   }, [router, queryClient]);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    void import("@vercel/speed-insights")
-      .then((mod) => {
-        if (!cancelled && typeof mod.injectSpeedInsights === "function") {
-          mod.injectSpeedInsights();
-        }
-      })
-      .catch((error) => {
-        console.warn("Speed Insights injection failed:", error);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <Toaster richColors position="top-right" />
+      <SpeedInsights />
     </QueryClientProvider>
   );
 }
